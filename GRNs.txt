@@ -1,0 +1,10 @@
+#Step 1:calclate the MI threshold
+java -Xmx5G -jar Aracne.jar -e /Exp.csv  -o Result/Exp --tfs data/human_tf_list.txt --pvalue 1E-8 --seed 1 \
+--calculateThreshold
+#Step 2:run 100 reproducible bootstraps
+for i in {1..100}
+do
+java -Xmx5G -jar Aracne.jar -e /Exp.csv -o Result/Exp --tfs data/human_tf_list.txt --pvalue 1E-8 --seed $i
+done
+#Step 3 :consolidate the bootstraps
+java -Xmx5G -jar Aracne.jar -o Result/Exp --consolidate
